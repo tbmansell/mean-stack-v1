@@ -9,23 +9,25 @@ gulp.task('hello', () => {
     console.log('hello')
 })
 
+// Prepares client JS
 gulp.task('js', function() {
-    gulp.src(['ng/module.js', 'ng/**/*.js'])
+    gulp.src(['client/ng/module.js', 'client/ng/**/*.js'])
         .pipe(sourcemaps.init())
             .pipe(concat('app.js'))
             .pipe(ngAnnotate())
             .pipe(uglify())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('assets'))
+        .pipe(gulp.dest('client/assets'))
 })
 
 gulp.task('watch', function() {
-    gulp.watch('ng/**/*.js', ['js'])
+    gulp.watch('client/ng/**/*.js', ['js'])
 })
 
+// Starts server, monitored
 gulp.task('dev:server', function(){
     nodemon({
-        script: 'server.js',
+        script: 'server/server.js',
         ext: 'js',
         ignore: ['gulp*', 'assets']
     })
