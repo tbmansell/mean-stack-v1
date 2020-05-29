@@ -6,7 +6,10 @@ angular.module('app')
 
         $scope.addPost = function() {
             if ($scope.postBody) {
-                var postContent = { username: 'anon', body: $scope.postBody }
+                var postContent = {
+                    username: $scope.currentUser.username,
+                    body: $scope.postBody,
+                }
 
                 PostsService.create(postContent).success(function(post) {
                     $scope.posts.unshift(postContent)

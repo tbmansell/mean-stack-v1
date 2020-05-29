@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        button {
+            border: 2px solid #aca;
+            background-color: #efe;
+            color: #050;
+        }
+        nav {
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+        nav li {
+            display: inline;
+            margin: 10px;
+            margin-right: 20px;
+            margin-left: 0;
+            padding: 10px;
+            border: 2px solid #ddf;
+            background-color: #eef;
+        }
+    </style>
+</head>
+<body ng-app="app" ng-controller="ApplicationCtrl">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li><a href="/#/">Posts</a></li>
+                <li><a href="/#/register">Register</a></li>
+                <li><a href="/#/login">Login</a></li>
+            </ul>
+            <p ng-if="currentUser" class="navbar-text navbar-right">
+                Signed in as {{ currentUser.username }}
+            </p>
+        </div>
+    </nav>
+    <div ng-view></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular-route.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

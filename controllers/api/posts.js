@@ -13,9 +13,9 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    console.log('Post: ', req.body.username, ':', req.body.body)
+    console.log('Request Auth: ', req.auth)
     const post = new Post({
-        username: req.body.username,
+        username: req.auth.username,
         body: req.body.body,
     })
     post.save((err, post) => {
