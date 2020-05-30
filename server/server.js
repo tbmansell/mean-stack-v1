@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const ws = require('./websockets')
 
 const app = express()
 app.use(bodyParser.json())
@@ -9,6 +10,7 @@ app.use('/api/users', require('./controllers/api/users.controller'))
 app.use('/api/sessions', require('./controllers/api/sessions.conttroller'))
 app.use('/', require('./controllers/static.controller'))
 
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
     console.log('Server listening on ', 3000)
 })
+ws.connect(server)

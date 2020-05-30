@@ -1,5 +1,6 @@
 angular.module('app')
     .controller('PostsCtrl', function($scope, PostsService){
+        // Load all current posts
         PostsService.fetch().success(function(posts) {
             $scope.posts = posts.map(function(post){
                 return {
@@ -8,9 +9,9 @@ angular.module('app')
                     date: new Date(post.date),
                 }
             })
-            console.log($scope.posts)
         })
 
+        // Add new post
         $scope.addPost = function() {
             if ($scope.postBody) {
                 var postContent = {
@@ -19,10 +20,20 @@ angular.module('app')
                 }
 
                 PostsService.create(postContent).success(function(post) {
-                    post.date = new Date()
-                    $scope.posts.unshift(post)
+                    // NOTE: we dont have to add to the local messages,
+                    // as a WS event will trigger form our own action and do it (below)
                     $scope.postBody = null
                 })
             }
         }
+
+        // Listen out for post from another client
+        $scope.$on('ws:new_post', function(_, post) {
+            // triggers angular refresh
+            $scope.$apply(function(){
+                // Convert string date to object
+                post.date = new Date(post.date)
+                $scope.posts.unshift(post)
+            })
+        })
     });

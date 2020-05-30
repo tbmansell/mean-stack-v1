@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Post = require('../../models/post')
+const websockets = require('../../websockets')
 
 router.get('/', (req, res, next) => {
     Post.find()
@@ -22,8 +23,10 @@ router.post('/', (req, res, next) => {
         if (err) {
             return next(err)
         }
+        websockets.broadcast('new_post', post)
         res.status(201).json(post)
     })
 })
 
 module.exports = router
+
