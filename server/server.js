@@ -1,8 +1,10 @@
 const express = require('express')
+const cors = require('cors');
 const bodyParser = require('body-parser')
 const ws = require('./websockets')
 
 const app = express()
+app.use(cors());
 app.use(bodyParser.json())
 app.use(require('./auth'))
 app.use('/api/posts', require('./controllers/api/posts.controller'))
