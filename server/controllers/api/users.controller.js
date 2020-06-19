@@ -19,8 +19,20 @@ router.get('/', (req, res, next) => {
     })
 })
 
-router.post('/', (req, res, next) => {
-    const user = new User({ username: req.body.username })
+router.post('/', async (req, res, next) => {
+    const username = req.body.username
+    const password = req.body.password
+
+    if (password.trim().length < 3) {
+        return res.status(400).send('Invalid password')
+    }
+
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+        return res.status(400).send('User already exists')
+    }
+
+    const user = new User({ username })
 
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if (err) {
