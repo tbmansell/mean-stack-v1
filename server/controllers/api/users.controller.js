@@ -44,7 +44,8 @@ router.post('/', async (req, res, next) => {
                 return next(err)
             }
             console.log('Created User: ', user.username, ' password: ', req.body.password)
-            res.status(201).send(user)
+            const token = jwt.encode({ username: user.username }, config.secret)
+            res.status(201).send(token)
         })
     })
 })
